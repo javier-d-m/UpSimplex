@@ -5,8 +5,8 @@
 # Description: setup
 # -----------------------------------------------------------------------------
 #
-# Started on  <Sat Nov 14,  01:37:54 2015 Carlos Clavero Munoz>
-# Last update <Tue July 12,  12:21:35 2016 Carlos Clavero Munoz>
+# Started on  <Sat Jan 25,  14:39:00 2025 Javier Diaz Medina>
+# Last update <Sat Jan 25,  14:39:00 2025 Javier Diaz Medina>
 # -----------------------------------------------------------------------------
 #
 # $Id:: $
@@ -14,37 +14,41 @@
 # $Revision:: $
 # -----------------------------------------------------------------------------
 #
-# Made by Carlos Clavero Munoz
+# Made by Javier Diaz Medina
 # 
 #
 
 # -----------------------------------------------------------------------------
-#     This file is part of PySimplex
+#     This file is part of UpSimplex
 #
-#     PySimplex is free software: you can redistribute it and/or modify it under
+#     UpSimplex is free software: you can redistribute it and/or modify it under
 #     the terms of the GNU General Public License as published by the Free
 #     Software Foundation, either version 3 of the License, or (at your option)
 #     any later version.
 #
-#     PySimplex is distributed in the hope that it will be useful, but WITHOUT ANY
+#     UpSimplex is distributed in the hope that it will be useful, but WITHOUT ANY
 #     WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 #     FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 #     details.
 #
 #     You should have received a copy of the GNU General Public License along
-#     with PySimplex.  If not, see <http://www.gnu.org/licenses/>.
+#     with UpSimplex.  If not, see <http://www.gnu.org/licenses/>.
 #
-#     Copyright Carlos Clavero Munoz, 2016
+#     Copyright Javier Diaz Medina, 2025
+#
+#     This code's initial source was made by Carlos Clavero Munoz, 2016
+#     Here is the original repository and his information for future references.
+#     Carlos Clavero Muñoz, c.clavero74@gmail.com, 'https://github.com/carlosclavero/PySimplex'
 # -----------------------------------------------------------------------------
 from distutils.core import setup
 setup(
-  name = 'PySimplex',
-  packages = ['PySimplex'], 
+  name = 'UpSimplex',
+  packages = ['UpSimplex'], 
   version = '0.1',
   description = 'This module contains tools to solve linear programming problems.',
-  author = 'Carlos Clavero Mu?oz',
-  author_email = 'c.clavero74@gmail.com',
-  url = 'https://github.com/carlosclavero/PySimplex',
+  author = 'Javier Diaz Medina',
+  author_email = 'javierediazem@gmail.com',
+  url = 'https://github.com/javier-d-m/UpSimplex',
   keywords = ['simplex', 'linear', 'programming','rational','maths'], 
   classifiers = [],
 )
