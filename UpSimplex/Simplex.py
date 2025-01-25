@@ -507,7 +507,7 @@ def variablesNoiteration(matrix, variablesIteration):
     # set of all variables
     groupOfVariables = np.array(range(matrix.shape[1]))
     # variables which are not in the iteration
-    varNoIter = np.array([])
+    varNoIter = np.array([], dtype='int16')
 
     # It is checked which variables are not in the iteration
     for i in groupOfVariables:
