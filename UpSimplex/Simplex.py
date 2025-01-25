@@ -1537,7 +1537,7 @@ def solveProblem(matrix, resources, signs, function, solutionOfDualProblem):
         print("Iteration#" + str(iteration))
         # The columns of the iteration are calculated
         columnsOfIteration = calculateColumnsOfIteration(
-            results[2], results[3], columnsOfIteration)
+            int(results[2]), int(results[3]), columnsOfIteration)
         # The columns of iteration are showed
         showIterCol(columnsOfIteration)
         # The iteration is solve
