@@ -6,7 +6,7 @@
 # -----------------------------------------------------------------------------
 #
 # Started on  <Sat Jan 25,  14:39:00 2025 Javier Diaz Medina>
-# Last update <Sat Jan 25,  14:39:00 2025 Javier Diaz Medina>
+# Last update <Sat Jan 28,  14:39:00 2025 Javier Diaz Medina>
 # -----------------------------------------------------------------------------
 #
 # $Id:: $
@@ -41,4 +41,5 @@
 # -----------------------------------------------------------------------------
 from UpSimplex import Simplex
 from UpSimplex.rational import rational
+from UpSimplex import IO
 
