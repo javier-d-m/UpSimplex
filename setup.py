@@ -44,7 +44,7 @@ from distutils.core import setup
 setup(
   name = 'UpSimplex',
   packages = ['UpSimplex'], 
-  version = '1.1.1',
+  version = '1.2.1',
   description = 'This module contains tools to solve linear programming problems.',
   author = 'Javier Diaz Medina',
   author_email = 'javierediazem@gmail.com',
