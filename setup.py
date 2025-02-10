@@ -40,15 +40,17 @@
 #     Here is the original repository and his information for future references.
 #     Carlos Clavero Muñoz, c.clavero74@gmail.com, 'https://github.com/carlosclavero/PySimplex'
 # -----------------------------------------------------------------------------
-from distutils.core import setup
+from setuptools import setup
 setup(
-  name = 'UpSimplex',
-  packages = ['UpSimplex'], 
-  version = '1.2.1',
-  description = 'This module contains tools to solve linear programming problems.',
+    name="UpSimplex",
+    version="1.2.2",
+    packages=["UpSimplex"],
+    install_requires=[
+        "gilp==2.1.0",  # Automatically installs gilp
+        # Add any other dependencies here
+    ],
+    description = 'This module contains tools to solve linear programming problems.',
   author = 'Javier Diaz Medina',
   author_email = 'javierediazem@gmail.com',
   url = 'https://github.com/javier-d-m/UpSimplex',
-  keywords = ['simplex', 'linear', 'programming','rational','maths'], 
-  classifiers = [],
 )
