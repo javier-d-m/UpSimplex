@@ -43,7 +43,7 @@
 from setuptools import setup
 setup(
     name="UpSimplex",
-    version="1.2.2",
+    version="1.2.3",
     packages=["UpSimplex"],
     install_requires=[
         "gilp==2.1.0",  # Automatically installs gilp
