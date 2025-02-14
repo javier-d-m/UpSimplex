@@ -133,7 +133,7 @@ def LP_Graphical_method():
     #Si es minimizar se debe cambiar la funcion objetivo a menos uno
     simplex_visual ( lp = lp, rule='dantzig' ).show()
 
-def PL_FormaEstandar():
+def LP_Standard_Simplex():
     # Paso 1: Configuración del modelo
     # Preguntar al usuario el número de variables
     num_variables = int(input("Number of variables to create: "))
