@@ -6,7 +6,7 @@
 # -----------------------------------------------------------------------------
 #
 # Started on  <Sat Jan 28,  9:33:00 2025 Javier Diaz Medina>
-# Last update <Sat Feb 10,  13:26:00 2025 Javier Diaz Medina>
+# Last update <Sat Feb 11,  10:11:00 2025 Javier Diaz Medina>
 # -----------------------------------------------------------------------------
 #
 # $Id:: $
@@ -51,31 +51,31 @@ warnings.filterwarnings('ignore')
 
 
 ############################ Rational operations ############################
-def PL_MetodoGrafico():
+def LP_Graphical_method():
     # Paso 1: Configuración del modelo
     # Preguntar al usuario el número de variables
-    num_variables = int(input("¿Cuántas variables deseas utilizar? "))
+    num_variables = int(input("Number of variables to create: "))
     if num_variables <= 0:
-        raise ValueError("Debes indicar al menos una variable")
+        raise ValueError("You should create at least one variable")
     elif num_variables > 3:
-        raise ValueError("No se puede graficar más de 3 variables")
+        raise ValueError("It is not posible to have more than 3 variables")
     variables = symbols(' '.join([f'x{i + 1}' for i in range(num_variables)]), real=True, nonnegative=True)
     SimboloVariable = [f"x{i+1}" for i in range(num_variables)]
 
     # Preguntar al usuario el número de restricciones
     # Preguntar por el número de restricciones
-    num_restricciones = int(input("¿Cuántas restricciones deseas crear? "))
+    num_restricciones = int(input("Number of constraints: "))
     if num_restricciones <= 0:
-        raise ValueError("Debes indicar al menos una restricción")
+        raise ValueError("You should declare at least one constraint")
 
     # Preguntar si la función objetivo es maximizar o minimizar
-    objetivo = input("¿Deseas maximizar o minimizar la función objetivo? (max/min): ").strip().lower()
+    objetivo = input("What is the objective function? (max/min): ").strip().lower()
     if objetivo not in ["max", "min"]:
-        raise ValueError("Debes especificar 'max' para maximizar o 'min' para minimizar.")
+        raise ValueError("You should type 'max' to maximize or 'min' to minimize.")
 
     # Preguntar por los coeficientes de la función objetivo
-    print("Ingresa los coeficientes de la función objetivo en el orden de las variables:")
-    c = Matrix([-float(input(f"Coeficiente de {var}: ")) for var in variables])
+    print("Please enter the OF coefficients for each variable:")
+    c = Matrix([-float(input(f"Coefficient for {var}: ")) for var in variables])
 
     if objetivo == "max":
         c = -c  # Convertir a minimización
@@ -87,12 +87,12 @@ def PL_MetodoGrafico():
 
     # Preguntar por cada restricción
     for i in range(num_restricciones):
-        print(f"Ingresa los coeficientes de la restricción {i + 1} en el orden de las variables:")
-        restriccion = [float(input(f"Coeficiente de {var}: ")) for var in variables]
-        operador = input("¿Es <=, >= o =?: ").strip()
+        print(f"Please enter the coefficients of Constraint {i + 1} following the order of variables:")
+        restriccion = [float(input(f"Coefficient for {var}: ")) for var in variables]
+        operador = input("Is <=, >= or =?: ").strip()
         if operador not in ["<=", ">=", "="]:
-            raise ValueError("Operador no válido. Usa '<=', '>=', o '='.")
-        rhs = float(input("Ingresa el lado derecho de la restricción: "))
+            raise ValueError("No valid operator. Use '<=', '>=', or '='.")
+        rhs = float(input("Please type the RHS valur for the constraint: "))
         # Guardar la restricción como la ingresó el usuario
         restricciones_usuario.append((restriccion, operador, rhs))
 
@@ -113,15 +113,15 @@ def PL_MetodoGrafico():
     b = Matrix(b)
 
     # Mostrar el modelo tal como fue ingresado
-    print("\nModelo ingresado:")
-    print("Función objetivo: ", end="")
+    print("\nEntered Model:")
+    print("Objective Function: ", end="")
     if objetivo == "max":
-        print("Max z =", " + ".join([f"{abs(c[i]):.3f}" if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c))]))
+        print("Max z =", " + ".join([f"{abs(c[i]):.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c))]))
     else:
-        print("Min z =", " + ".join([f"{abs(c[i]):.3f}" if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c))]))
-    print("Sujeto a:")
+        print("Min z =", " + ".join([f"{abs(c[i]):.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c))]))
+    print("Subject to:")
     for i, (coefs, op, rhs) in enumerate(restricciones_usuario):
-        restriccion_str = " + ".join([f"{coefs[j]:.3f}" if coefs[j] % 1 != 0 else f"{int(coefs[j])}" +  SimboloVariable[j] for j in range(len(coefs))])
+        restriccion_str = " + ".join([f"{coefs[j]:.3f}" +  SimboloVariable[j] if coefs[j] % 1 != 0 else f"{int(coefs[j])}" +  SimboloVariable[j] for j in range(len(coefs))])
         print(f"{restriccion_str} {op} {rhs}")
 
     A_list = np.array(A, dtype=np.float64)
@@ -136,26 +136,26 @@ def PL_MetodoGrafico():
 def PL_FormaEstandar():
     # Paso 1: Configuración del modelo
     # Preguntar al usuario el número de variables
-    num_variables = int(input("¿Cuántas variables deseas utilizar? "))
+    num_variables = int(input("Number of variables to create: "))
     if num_variables <= 0:
-      raise ValueError("Debes indicar al menos una variable")
+      raise ValueError("You should indicate at least one variable")
     variables = symbols(' '.join([f'x{i + 1}' for i in range(num_variables)]), real=True, nonnegative=True)
     SimboloVariable = [f"x{i+1}" for i in range(num_variables)]
 
     # Preguntar al usuario el número de restricciones
     # Preguntar por el número de restricciones
-    num_restricciones = int(input("¿Cuántas restricciones deseas crear? "))
+    num_restricciones = int(input("Number of constraints to create: "))
     if num_restricciones <= 0:
-      raise ValueError("Debes indicar al menos una restricción")
+      raise ValueError("You should indicate at least one constraint")
 
     # Preguntar si la función objetivo es maximizar o minimizar
-    objetivo = input("¿Deseas maximizar o minimizar la función objetivo? (max/min): ").strip().lower()
+    objetivo = input("What is the objective function? (max/min): ").strip().lower()
     if objetivo not in ["max", "min"]:
-        raise ValueError("Debes especificar 'max' para maximizar o 'min' para minimizar.")
+        raise ValueError("You should type 'max' to maximize or 'min' to minimize.")
 
     # Preguntar por los coeficientes de la función objetivo
-    print("Ingresa los coeficientes de la función objetivo en el orden de las variables:")
-    c = Matrix([-float(input(f"Coeficiente de {var}: ")) for var in variables])
+    print("Please enter the OF coefficients (for each variable) following the order of variables::")
+    c = Matrix([-float(input(f"Coefficient for {var}: ")) for var in variables])
 
     if objetivo == "max":
         c = -c  # Convertir a minimización
@@ -168,12 +168,12 @@ def PL_FormaEstandar():
 
     # Preguntar por cada restricción
     for i in range(num_restricciones):
-        print(f"Ingresa los coeficientes de la restricción {i + 1} en el orden de las variables:")
-        restriccion = [float(input(f"Coeficiente de {var}: ")) for var in variables]
+        print(f"Please enter the coefficients of Constraint {i + 1} following the order of variables:")
+        restriccion = [float(input(f"Coefficient for {var}: ")) for var in variables]
         operador = input("¿Es <=, >= o =?: ").strip()
         if operador not in ["<=", ">=", "="]:
-            raise ValueError("Operador no válido. Usa '<=', '>=', o '='.")
-        rhs = float(input("Ingresa el lado derecho de la restricción: "))
+            raise ValueError("No valid operator. Use '<=', '>=', or '='.")
+        rhs = float(input("Please enter the RHS value for the constraint: "))
 
         desigualdades.append(operador)
 
@@ -199,15 +199,15 @@ def PL_FormaEstandar():
     b = Matrix(b)
 
     # Mostrar el modelo tal como fue ingresado
-    print("\nModelo ingresado:")
-    print("Función objetivo: ", end="")
+    print("\nEntered Model:")
+    print("Objective Function: ", end="")
     if objetivo == "max":
-        print("Max z =", " + ".join([f"{abs(c[i]):.3f}" if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c))]))
+        print("Max z =", " + ".join([f"{abs(c[i]):.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c))]))
     else:
-        print("Min z =", " + ".join([f"{abs(c[i]):.3f}" if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c))]))
-    print("Sujeto a:")
+        print("Min z =", " + ".join([f"{abs(c[i]):.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c))]))
+    print("Subject to:")
     for i, (coefs, op, rhs) in enumerate(restricciones_usuario):
-        restriccion_str = " + ".join([f"{coefs[j]:.3f}" if coefs[j] % 1 != 0 else f"{int(coefs[j])}" +  SimboloVariable[j] for j in range(len(coefs))])
+        restriccion_str = " + ".join([f"{coefs[j]:.3f}" +  SimboloVariable[j] if coefs[j] % 1 != 0 else f"{int(coefs[j])}" +  SimboloVariable[j] for j in range(len(coefs))])
         print(f"{restriccion_str} {op} {rhs}")
 
 
@@ -216,26 +216,26 @@ def PL_FormaEstandar():
     ContadorArtificial = 0
 
     for i in range(A.rows):
-        restriccion = " + ".join([f"{A[i, j]:.3f}" if A[i, j] % 1 != 0 else f"{int(A[i, j])}" + SimboloVariable[j] for j in range(A.cols)])
+        restriccion = " + ".join([f"{A[i, j]:.3f}" + SimboloVariable[j] if A[i, j] % 1 != 0 else f"{int(A[i, j])}" + SimboloVariable[j] for j in range(A.cols)])
         while True:
-            tipo_variable = input(f"Para la restricción {i + 1} ({restriccion}{desigualdades[i]}{b[i]:.3f}), ¿qué tipo de variable deseas agregar? holgura (h), exceso (e), artificial (a), siguiente restricción (s)").strip().lower()
-            if tipo_variable == "holgura" or tipo_variable == "h":
+            tipo_variable = input(f"For the constraint {i + 1} ({restriccion}{desigualdades[i]}{b[i]:.3f}), what type of auxiliary variable you want to add? slack, surplus, artificial. Next constraint (n)").strip().lower()
+            if tipo_variable == "slack" or tipo_variable == "h":
                 ContadorAuxiliar += 1
                 SimboloVariable.append(f's{ContadorAuxiliar}')
                 nueva_columna = Matrix.zeros(A.rows, 1)
                 nueva_columna[i] = 1.0
                 A = A.row_join(nueva_columna)
-                restriccion = " + ".join([f"{A[i, j]:.3f}" if A[i, j] % 1 != 0 else f"{int(A[i, j])}" + SimboloVariable[j] for j in range(A.cols)])
-                print(f"Se agregó la variable de holgura s{ContadorAuxiliar} a la restricción {i + 1}.")
+                restriccion = " + ".join([f"{A[i, j]:.3f}" + SimboloVariable[j] if A[i, j] % 1 != 0 else f"{int(A[i, j])}" + SimboloVariable[j] for j in range(A.cols)])
+                print(f"The slack variable s{ContadorAuxiliar} was added to constraint {i + 1}.")
                 desigualdades[i] = '='
-            elif tipo_variable == "exceso" or tipo_variable == "e":
+            elif tipo_variable == "surplus" or tipo_variable == "e":
                 ContadorAuxiliar += 1
                 SimboloVariable.append(f's{ContadorAuxiliar}')
                 nueva_columna = Matrix.zeros(A.rows, 1)
                 nueva_columna[i] = -1.0
                 A = A.row_join(nueva_columna)
-                restriccion = " + ".join([f"{A[i, j]:.3f}" if A[i, j] % 1 != 0 else f"{int(A[i, j])}" + SimboloVariable[j] for j in range(A.cols)])
-                print(f"Se agregó la variable de exceso s{i + 1} a la restricción {i + 1}.")
+                restriccion = " + ".join([f"{A[i, j]:.3f}" + SimboloVariable[j] if A[i, j] % 1 != 0 else f"{int(A[i, j])}" + SimboloVariable[j] for j in range(A.cols)])
+                print(f"The surplus variable s{i + 1} was added to constraint {i + 1}.")
                 desigualdades[i] = '='
             elif tipo_variable == "artificial" or tipo_variable == "a":
                 ContadorArtificial += 1
@@ -243,27 +243,27 @@ def PL_FormaEstandar():
                 nueva_columna = Matrix.zeros(A.rows, 1)
                 nueva_columna[i] = 1.0
                 A = A.row_join(nueva_columna)
-                restriccion = " + ".join([f"{A[i, j]:.3f}" if A[i, j] % 1 != 0 else f"{int(A[i, j])}" + SimboloVariable[j] for j in range(A.cols)])
-                print(f"Se agregó la variable artificial a{i + 1} a la restricción {i + 1}.")
+                restriccion = " + ".join([f"{A[i, j]:.3f}" + SimboloVariable[j] if A[i, j] % 1 != 0 else f"{int(A[i, j])}" + SimboloVariable[j] for j in range(A.cols)])
+                print(f"The artificial variable a{i + 1} was added to constraint {i + 1}.")
                 desigualdades[i] = '='
-            elif tipo_variable == "siguiente" or tipo_variable == "s":
+            elif tipo_variable == "next" or tipo_variable == "n":
                 break
             else:
-                print("Entrada incorrecta. Por favor, selecciona entre 'holgura', 'exceso', 'artificial' o 'siguiente'.")
+                print("Incorrect. Please select between 'slack', 'surplus', 'artificial' o 'next'.")
 
     # Actualizar el vector c para incluir las variables adicionales
     c = c.col_join(Matrix.zeros(len(SimboloVariable)-num_variables, 1,dtype=float))
 
     # Mostrar el modelo en forma estándar
-    print("\nModelo en forma estándar:")
+    print("\nModel in standard form:")
     if objetivo == "max":
-        print("Max z - (", " + ".join([f"{abs(c[i]):.3f}" if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c)) if c[i] != 0]).replace("+ -", "- "), ") = 0")
+        print("Max z - (", " + ".join([f"{abs(c[i]):.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c)) if c[i] != 0]).replace("+ -", "- "), ") = 0")
     else:
-        print("Min z - (", " + ".join([f"{abs(c[i]):.3f}" if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c)) if c[i] != 0]).replace("+ -", "- "), ") = 0")
+        print("Min z - (", " + ".join([f"{abs(c[i]):.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c)) if c[i] != 0]).replace("+ -", "- "), ") = 0")
 
-    print("Sujeto a:")
+    print("Subject to:")
     for i in range(A.rows):
-        restriccion = " + ".join([f"{A[i, j]:.3f}" if A[i, j] % 1 != 0 else f"{int(A[i, j])}" + SimboloVariable[j] for j in range(A.cols)])
+        restriccion = " + ".join([f"{A[i, j]:.3f}" + SimboloVariable[j] if A[i, j] % 1 != 0 else f"{int(A[i, j])}" + SimboloVariable[j] for j in range(A.cols)])
         restriccion = restriccion.replace("+ -", "- ")  # Ajustar signos
         print(f"{restriccion} = {b[i]:.3f}" if b[i] % 1 != 0 else f"{restriccion} = {int(b[i])}" )
 
@@ -273,15 +273,15 @@ def PL_FormaEstandar():
 
     if "a1" in SimboloVariable:
       UserAnswer = ""
-      while UserAnswer != "Si" and UserAnswer != "No":
-        UserAnswer = input("¿Deseas utilizar el metodo dos fases? (Si/No) ")
-        if UserAnswer != "Si" and UserAnswer != "No":
-          print("Usuario no eligio respuesta valida...")
+      while UserAnswer != "Y" and UserAnswer != "N":
+        UserAnswer = input("Do you want to use the Two Phase Method? (Y/N) ")
+        if UserAnswer != "Y" and UserAnswer != "N":
+          print("Please select a valid answer...")
       if UserAnswer == "Si":
-        print("Comienza metodo dos fases...")
+        print("Starting Two Phase Method...")
         DosFasesSimplex(Matriz,FuncionObjetivo,Recursos,SimboloVariable)
       else:
-        print("Actividad finalizada")
+        print("Finished activity")
     else:
       Simplex(Matriz,FuncionObjetivo,Recursos,SimboloVariable)
 
@@ -323,7 +323,7 @@ def Simplex(Matriz, FuncionObjetivo, Recursos, SimboloVariable):
     df.at['z', 'b'] = product_sum if product_sum > 0 else 0 # Assign the sum product result to the 'b' column for row Z, si es menor a cero se queda como cero
 
     ##########################         Imprimir data frame
-    print("\n Método Simplex:")
+    print("\n Simplex Method:")
     truncate = np.vectorize(lambda x: float(f"{x:.3f}"))
     df = df.apply(truncate)
     print(df.to_string(index=True)) #, float_format="%.3f"
@@ -331,21 +331,21 @@ def Simplex(Matriz, FuncionObjetivo, Recursos, SimboloVariable):
     ######################## gauss jordan logic
     UserAnswer = False
     while UserAnswer==False:
-        if input("¿Esta solución es la optima? Escribe Si o No ") == "Si":
+        if input("Is the solution of the current tableau optimal? Y/N ") == "Y":
             UserAnswer = True
             break
         else:
             UserAnswer = False
-        VariableEntrada = input("Ingresa la variable de Entrada: ")
-        VariableSalida = input("Ingresa la variable de Salida: ")
-        FilaPivote = float(input("Ingresa el valor por el se dividirá la fila pivote: "))
+        VariableEntrada = input("Plese select the Entering Variable (EV): ")
+        VariableSalida = input("Please select the Leaving Variable (LV): ")
+        FilaPivote = float(input("Please enter the factor to divide the pivot row: "))
         NumberOfRows = df.shape[0]
         df.loc[VariableSalida] = df.loc[VariableSalida]/FilaPivote #dividimos fila pivote por el número indicado
         truncate = np.vectorize(lambda x: float(f"{x:.3f}"))
         df = df.apply(truncate)
         print(df.to_string(index=True))
         MultipleValues = [
-        float(input(f"Escribe el multiplicador para la fila {VariableSalida} que se restará a la fila {row_index[rows]}: "))
+        float(input(f"Please enter the multiplier for row {VariableSalida} that will be SUBTRACTED from row {row_index[rows]}: "))
         if row_index[rows] != VariableSalida else None
         for rows in range(NumberOfRows)
         ]
@@ -359,7 +359,7 @@ def Simplex(Matriz, FuncionObjetivo, Recursos, SimboloVariable):
         truncate = np.vectorize(lambda x: float(f"{x:.3f}"))
         df = df.apply(truncate)
         print(df.to_string(index=True))
-    print("Finalizado")
+    print("Finished")
 
 def DosFasesSimplex(Matriz, FuncionObjetivo, Recursos, SimboloVariable):
     #Nueva funcion objetivo W
@@ -415,14 +415,14 @@ def DosFasesSimplex(Matriz, FuncionObjetivo, Recursos, SimboloVariable):
                 product_sum += first_row_values[col] * last_column_values[idx]
     df.at['w', 'b'] = product_sum if product_sum > 0 else 0 # Assign the sum product result to the 'b' column for row Z, si es menor a cero se queda como cero
     ##########################         Imprimir data frame
-    print("\n Método dos fases Simplex:")
+    print("\n Two Phase Simplex Method:")
     truncate = np.vectorize(lambda x: float(f"{x:.3f}"))
     df = df.apply(truncate)
     print(df.to_string(index=True))
 
     ######################## remove initial -1 in artificial variables
     MultipleValues = [
-    float(input(f"Escribe el multiplicador para la fila {rows} que se restará a la fila w: "))
+    float(input(f"Please type the multiplier for row {rows} that will be substracted from row W: "))
     for rows in row_index
     if rows.find("a") == False
     ]
@@ -435,21 +435,21 @@ def DosFasesSimplex(Matriz, FuncionObjetivo, Recursos, SimboloVariable):
     ######################## gauss jordan logic
     UserAnswer = False
     while UserAnswer==False:
-        if input("¿Esta lista para la segunda fase? Escribe Si o No ?") == "Si":
+        if input("Is the current tableau ready to move to Phase 2?") == "Si":
             UserAnswer = True
             break
         else:
             UserAnswer = False
-        VariableEntrada = input("Ingresa la variable de Entrada: ")
-        VariableSalida = input("Ingresa la variable de Salida: ")
-        FilaPivote = float(input("Ingresa el valor por el se dividirá la fila pivote: "))
+        VariableEntrada = input("Please type the Entering Variable (EV): ")
+        VariableSalida = input("Please select the Leaving Variable (LV): ")
+        FilaPivote = float(input("Please type the multiplier to divide the Pivot row: "))
         NumberOfRows = df.shape[0]
         df.loc[VariableSalida] = df.loc[VariableSalida]/FilaPivote #dividimos fila pivote por el número indicado
         truncate = np.vectorize(lambda x: float(f"{x:.3f}"))
         df = df.apply(truncate)
         print(df.to_string(index=True))
         MultipleValues = [
-        float(input(f"Escribe el multiplicador para la fila {VariableSalida} que se restará a la fila {row_index[rows]}: "))
+        float(input(f"Please type the multiplier to for row {VariableSalida} that will be SUBTRACTED from row {row_index[rows]}: "))
         if row_index[rows] != VariableSalida else None
         for rows in range(NumberOfRows)
         ]
@@ -463,7 +463,7 @@ def DosFasesSimplex(Matriz, FuncionObjetivo, Recursos, SimboloVariable):
         df = df.apply(truncate)
         print(df.to_string(index=True))
 
-    print("Termina primera fase...")
+    print("End of the Phase 1...")
     CantidadVariablesArtificiales = 0
     for letter in SimboloVariable:
         if 'a' in letter:
