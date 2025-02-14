@@ -42,4 +42,5 @@
 from UpSimplex import Simplex
 from UpSimplex.rational import rational
 from UpSimplex import IO
+from UpSimplex import OR
 
