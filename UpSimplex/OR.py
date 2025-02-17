@@ -92,7 +92,7 @@ def LP_Graphical_method():
         operador = input("Is <=, >= or =?: ").strip()
         if operador not in ["<=", ">=", "="]:
             raise ValueError("No valid operator. Use '<=', '>=', or '='.")
-        rhs = float(input("Please type the RHS valur for the constraint: "))
+        rhs = float(input("Please type the RHS value for the constraint: "))
         # Guardar la restricción como la ingresó el usuario
         restricciones_usuario.append((restriccion, operador, rhs))
 
@@ -170,7 +170,7 @@ def LP_Standard_Simplex():
     for i in range(num_restricciones):
         print(f"Please enter the coefficients of Constraint {i + 1} following the order of variables:")
         restriccion = [float(input(f"Coefficient for {var}: ")) for var in variables]
-        operador = input("¿Es <=, >= o =?: ").strip()
+        operador = input("¿Is it <=, >= o =?: ").strip()
         if operador not in ["<=", ">=", "="]:
             raise ValueError("No valid operator. Use '<=', '>=', or '='.")
         rhs = float(input("Please enter the RHS value for the constraint: "))
