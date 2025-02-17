@@ -6,7 +6,7 @@
 # -----------------------------------------------------------------------------
 #
 # Started on  <Sat Jan 28,  9:33:00 2025 Javier Diaz Medina>
-# Last update <Sat Feb 10,  13:26:00 2025 Javier Diaz Medina>
+# Last update <Sat Feb 11,  10:11:00 2025 Javier Diaz Medina>
 # -----------------------------------------------------------------------------
 #
 # $Id:: $
@@ -116,12 +116,12 @@ def PL_MetodoGrafico():
     print("\nModelo ingresado:")
     print("Función objetivo: ", end="")
     if objetivo == "max":
-        print("Max z =", " + ".join([f"{abs(c[i]):.3f}" if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c))]))
+        print("Max z =", " + ".join([f"{abs(c[i]):.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c))]))
     else:
-        print("Min z =", " + ".join([f"{abs(c[i]):.3f}" if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c))]))
+        print("Min z =", " + ".join([f"{abs(c[i]):.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c))]))
     print("Sujeto a:")
     for i, (coefs, op, rhs) in enumerate(restricciones_usuario):
-        restriccion_str = " + ".join([f"{coefs[j]:.3f}" if coefs[j] % 1 != 0 else f"{int(coefs[j])}" +  SimboloVariable[j] for j in range(len(coefs))])
+        restriccion_str = " + ".join([f"{coefs[j]:.3f}" +  SimboloVariable[j] if coefs[j] % 1 != 0 else f"{int(coefs[j])}" +  SimboloVariable[j] for j in range(len(coefs))])
         print(f"{restriccion_str} {op} {rhs}")
 
     A_list = np.array(A, dtype=np.float64)
@@ -202,12 +202,12 @@ def PL_FormaEstandar():
     print("\nModelo ingresado:")
     print("Función objetivo: ", end="")
     if objetivo == "max":
-        print("Max z =", " + ".join([f"{abs(c[i]):.3f}" if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c))]))
+        print("Max z =", " + ".join([f"{abs(c[i]):.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c))]))
     else:
-        print("Min z =", " + ".join([f"{abs(c[i]):.3f}" if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c))]))
+        print("Min z =", " + ".join([f"{abs(c[i]):.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c))]))
     print("Sujeto a:")
     for i, (coefs, op, rhs) in enumerate(restricciones_usuario):
-        restriccion_str = " + ".join([f"{coefs[j]:.3f}" if coefs[j] % 1 != 0 else f"{int(coefs[j])}" +  SimboloVariable[j] for j in range(len(coefs))])
+        restriccion_str = " + ".join([f"{coefs[j]:.3f}" +  SimboloVariable[j] if coefs[j] % 1 != 0 else f"{int(coefs[j])}" +  SimboloVariable[j] for j in range(len(coefs))])
         print(f"{restriccion_str} {op} {rhs}")
 
 
@@ -216,7 +216,7 @@ def PL_FormaEstandar():
     ContadorArtificial = 0
 
     for i in range(A.rows):
-        restriccion = " + ".join([f"{A[i, j]:.3f}" if A[i, j] % 1 != 0 else f"{int(A[i, j])}" + SimboloVariable[j] for j in range(A.cols)])
+        restriccion = " + ".join([f"{A[i, j]:.3f}" + SimboloVariable[j] if A[i, j] % 1 != 0 else f"{int(A[i, j])}" + SimboloVariable[j] for j in range(A.cols)])
         while True:
             tipo_variable = input(f"Para la restricción {i + 1} ({restriccion}{desigualdades[i]}{b[i]:.3f}), ¿qué tipo de variable deseas agregar? holgura (h), exceso (e), artificial (a), siguiente restricción (s)").strip().lower()
             if tipo_variable == "holgura" or tipo_variable == "h":
@@ -225,7 +225,7 @@ def PL_FormaEstandar():
                 nueva_columna = Matrix.zeros(A.rows, 1)
                 nueva_columna[i] = 1.0
                 A = A.row_join(nueva_columna)
-                restriccion = " + ".join([f"{A[i, j]:.3f}" if A[i, j] % 1 != 0 else f"{int(A[i, j])}" + SimboloVariable[j] for j in range(A.cols)])
+                restriccion = " + ".join([f"{A[i, j]:.3f}" + SimboloVariable[j] if A[i, j] % 1 != 0 else f"{int(A[i, j])}" + SimboloVariable[j] for j in range(A.cols)])
                 print(f"Se agregó la variable de holgura s{ContadorAuxiliar} a la restricción {i + 1}.")
                 desigualdades[i] = '='
             elif tipo_variable == "exceso" or tipo_variable == "e":
@@ -234,7 +234,7 @@ def PL_FormaEstandar():
                 nueva_columna = Matrix.zeros(A.rows, 1)
                 nueva_columna[i] = -1.0
                 A = A.row_join(nueva_columna)
-                restriccion = " + ".join([f"{A[i, j]:.3f}" if A[i, j] % 1 != 0 else f"{int(A[i, j])}" + SimboloVariable[j] for j in range(A.cols)])
+                restriccion = " + ".join([f"{A[i, j]:.3f}" + SimboloVariable[j] if A[i, j] % 1 != 0 else f"{int(A[i, j])}" + SimboloVariable[j] for j in range(A.cols)])
                 print(f"Se agregó la variable de exceso s{i + 1} a la restricción {i + 1}.")
                 desigualdades[i] = '='
             elif tipo_variable == "artificial" or tipo_variable == "a":
@@ -243,7 +243,7 @@ def PL_FormaEstandar():
                 nueva_columna = Matrix.zeros(A.rows, 1)
                 nueva_columna[i] = 1.0
                 A = A.row_join(nueva_columna)
-                restriccion = " + ".join([f"{A[i, j]:.3f}" if A[i, j] % 1 != 0 else f"{int(A[i, j])}" + SimboloVariable[j] for j in range(A.cols)])
+                restriccion = " + ".join([f"{A[i, j]:.3f}" + SimboloVariable[j] if A[i, j] % 1 != 0 else f"{int(A[i, j])}" + SimboloVariable[j] for j in range(A.cols)])
                 print(f"Se agregó la variable artificial a{i + 1} a la restricción {i + 1}.")
                 desigualdades[i] = '='
             elif tipo_variable == "siguiente" or tipo_variable == "s":
@@ -257,13 +257,13 @@ def PL_FormaEstandar():
     # Mostrar el modelo en forma estándar
     print("\nModelo en forma estándar:")
     if objetivo == "max":
-        print("Max z - (", " + ".join([f"{abs(c[i]):.3f}" if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c)) if c[i] != 0]).replace("+ -", "- "), ") = 0")
+        print("Max z - (", " + ".join([f"{abs(c[i]):.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c)) if c[i] != 0]).replace("+ -", "- "), ") = 0")
     else:
-        print("Min z - (", " + ".join([f"{abs(c[i]):.3f}" if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c)) if c[i] != 0]).replace("+ -", "- "), ") = 0")
+        print("Min z - (", " + ".join([f"{abs(c[i]):.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c)) if c[i] != 0]).replace("+ -", "- "), ") = 0")
 
     print("Sujeto a:")
     for i in range(A.rows):
-        restriccion = " + ".join([f"{A[i, j]:.3f}" if A[i, j] % 1 != 0 else f"{int(A[i, j])}" + SimboloVariable[j] for j in range(A.cols)])
+        restriccion = " + ".join([f"{A[i, j]:.3f}" + SimboloVariable[j] if A[i, j] % 1 != 0 else f"{int(A[i, j])}" + SimboloVariable[j] for j in range(A.cols)])
         restriccion = restriccion.replace("+ -", "- ")  # Ajustar signos
         print(f"{restriccion} = {b[i]:.3f}" if b[i] % 1 != 0 else f"{restriccion} = {int(b[i])}" )
 
