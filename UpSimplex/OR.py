@@ -435,7 +435,7 @@ def DosFasesSimplex(Matriz, FuncionObjetivo, Recursos, SimboloVariable):
     ######################## gauss jordan logic
     UserAnswer = False
     while UserAnswer==False:
-        if input("Is the current tableau ready to move to Phase 2?") == "Si":
+        if input("Is the current tableau ready to move to Phase 2?") == "Y":
             UserAnswer = True
             break
         else:
