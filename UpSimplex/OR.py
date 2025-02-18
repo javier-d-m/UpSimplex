@@ -277,7 +277,7 @@ def LP_Standard_Simplex():
         UserAnswer = input("Do you want to use the Two Phase Method? (Y/N) ")
         if UserAnswer != "Y" and UserAnswer != "N":
           print("Please select a valid answer...")
-      if UserAnswer == "Si":
+      if UserAnswer == "Y":
         print("Starting Two Phase Method...")
         DosFasesSimplex(Matriz,FuncionObjetivo,Recursos,SimboloVariable)
       else:
