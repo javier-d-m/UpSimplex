@@ -6,7 +6,7 @@
 # -----------------------------------------------------------------------------
 #
 # Started on  <Sat Jan 28,  9:33:00 2025 Javier Diaz Medina>
-# Last update <Sat Feb 11,  10:11:00 2025 Javier Diaz Medina>
+# Last update <Tuesday March 25,  17:08:00 2025 Javier Diaz Medina>
 # -----------------------------------------------------------------------------
 #
 # $Id:: $
@@ -464,15 +464,14 @@ def DosFasesSimplex(Matriz, FuncionObjetivo, Recursos, SimboloVariable):
         print(df.to_string(index=True))
 
     print("End of the Phase 1...")
-    CantidadVariablesArtificiales = 0
-    for letter in SimboloVariable:
-        if 'a' in letter:
-            CantidadVariablesArtificiales += 1
-
-    Matriz = df.iloc[1:, :-(CantidadVariablesArtificiales+1)]
-    FuncionObjetivo = FuncionObjetivo[:-CantidadVariablesArtificiales]
+    #Remove all artificial variables if they are not in the basic variable vector
+    BasicVariableVector = df.iloc[1:, 0]
+    df = df[[col for col in df.columns if 'a' not in col or col in BasicVariableVector]]
+            
+    Matriz = df.iloc[1:,:-1]
+    FuncionObjetivo = df.iloc[:1,:-1]
     Recursos = df.iloc[1:]['b']
-    SimboloVariable = SimboloVariable[:-CantidadVariablesArtificiales]
+    SimboloVariable = df.columns[:-1].tolist()
 
     Simplex(Matriz,FuncionObjetivo,Recursos,SimboloVariable)
 
