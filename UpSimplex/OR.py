@@ -466,10 +466,16 @@ def DosFasesSimplex(Matriz, FuncionObjetivo, Recursos, SimboloVariable):
     print("End of the Phase 1...")
     #Remove all artificial variables if they are not in the basic variable vector
     BasicVariableVector = df.iloc[1:, 0]
+    NewFuncionObjetivo = np.array([])
+    ArrayPosition = 0
+    for col in df.columns[:-1]:
+        if 'a' not in col or col in BasicVariableVector:
+            NewFuncionObjetivo = np.append(NewFuncionObjetivo,FuncionObjetivo[ArrayPosition])
+        ArrayPosition += 1
+
     df = df[[col for col in df.columns if 'a' not in col or col in BasicVariableVector]]
-            
     Matriz = df.iloc[1:,:-1]
-    FuncionObjetivo = FuncionObjetivo[[col for col in FuncionObjetivo.columns if 'a' not in col or col in BasicVariableVector]]
+    FuncionObjetivo = NewFuncionObjetivo
     Recursos = df.iloc[1:]['b']
     SimboloVariable = df.columns[:-1].tolist()
 
