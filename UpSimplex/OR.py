@@ -116,9 +116,9 @@ def LP_Graphical_method():
     print("\nEntered Model:")
     print("Objective Function: ", end="")
     if objetivo == "max":
-        print("Max z =", " + ".join([f"{c[i]:+.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(c[i]):d}" + SimboloVariable[i] for i in range(len(c))]))
+        print("Max z =", " + ".join([f"{c[i]:+.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(c[i]):+d}" + SimboloVariable[i] for i in range(len(c))]))
     else:
-        print("Min z =", " + ".join([f"{c[i]:+.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(c[i]):d}" + SimboloVariable[i] for i in range(len(c))]))
+        print("Min z =", " + ".join([f"{c[i]:+.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(c[i]):+d}" + SimboloVariable[i] for i in range(len(c))]))
     print("Subject to:")
     for i, (coefs, op, rhs) in enumerate(restricciones_usuario):
         restriccion_str = " + ".join([f"{coefs[j]:.3f}" +  SimboloVariable[j] if coefs[j] % 1 != 0 else f"{int(coefs[j])}" +  SimboloVariable[j] for j in range(len(coefs))])
@@ -202,9 +202,9 @@ def LP_Standard_Simplex():
     print("\nEntered Model:")
     print("Objective Function: ", end="")
     if objetivo == "max":
-        print("Max z =", " + ".join([f"{c[i]:+.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(c[i]):d}" + SimboloVariable[i] for i in range(len(c))]))
+        print("Max z =", " + ".join([f"{c[i]:+.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(c[i]):+d}" + SimboloVariable[i] for i in range(len(c))]))
     else:
-        print("Min z =", " + ".join([f"{c[i]:+.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(c[i]):d}" + SimboloVariable[i] for i in range(len(c))]))
+        print("Min z =", " + ".join([f"{c[i]:+.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(c[i]):+d}" + SimboloVariable[i] for i in range(len(c))]))
     print("Subject to:")
     for i, (coefs, op, rhs) in enumerate(restricciones_usuario):
         restriccion_str = " + ".join([f"{coefs[j]:.3f}" +  SimboloVariable[j] if coefs[j] % 1 != 0 else f"{int(coefs[j])}" +  SimboloVariable[j] for j in range(len(coefs))])
@@ -257,9 +257,9 @@ def LP_Standard_Simplex():
     # Mostrar el modelo en forma estándar
     print("\nModel in standard form:")
     if objetivo == "max":
-        print("Max z - (", " + ".join([f"{c[i]:+.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(c[i]):d}" + SimboloVariable[i] for i in range(len(c)) if c[i] != 0]).replace("+ -", "- "), ") = 0")
+        print("Max z - (", " + ".join([f"{c[i]:+.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(c[i]):+d}" + SimboloVariable[i] for i in range(len(c)) if c[i] != 0]).replace("+ -", "- "), ") = 0")
     else:
-        print("Min z - (", " + ".join([f"{c[i]:+.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(c[i]):d}" + SimboloVariable[i] for i in range(len(c)) if c[i] != 0]).replace("+ -", "- "), ") = 0")
+        print("Min z - (", " + ".join([f"{c[i]:+.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(c[i]):+d}" + SimboloVariable[i] for i in range(len(c)) if c[i] != 0]).replace("+ -", "- "), ") = 0")
 
     print("Subject to:")
     for i in range(A.rows):
