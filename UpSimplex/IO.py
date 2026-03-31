@@ -6,7 +6,7 @@
 # -----------------------------------------------------------------------------
 #
 # Started on  <Sat Jan 28,  9:33:00 2025 Javier Diaz Medina>
-# Last update <Tuesday March 25,  17:08:00 2025 Javier Diaz Medina>
+# Last update <Tuesday March 31,  00:10:00 2026 Javier Diaz Medina>
 # -----------------------------------------------------------------------------
 #
 # $Id:: $
@@ -116,9 +116,9 @@ def PL_MetodoGrafico():
     print("\nModelo ingresado:")
     print("Función objetivo: ", end="")
     if objetivo == "max":
-        print("Max z =", " + ".join([f"{abs(c[i]):.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c))]))
+        print("Max z =", " ".join([f"{c[i]:+.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(c[i]):d}" + SimboloVariable[i] for i in range(len(c))]))
     else:
-        print("Min z =", " + ".join([f"{abs(c[i]):.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c))]))
+        print("Min z =", " ".join([f"{c[i]:+.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(c[i]):d}" + SimboloVariable[i] for i in range(len(c))]))
     print("Sujeto a:")
     for i, (coefs, op, rhs) in enumerate(restricciones_usuario):
         restriccion_str = " + ".join([f"{coefs[j]:.3f}" +  SimboloVariable[j] if coefs[j] % 1 != 0 else f"{int(coefs[j])}" +  SimboloVariable[j] for j in range(len(coefs))])
@@ -202,9 +202,9 @@ def PL_FormaEstandar():
     print("\nModelo ingresado:")
     print("Función objetivo: ", end="")
     if objetivo == "max":
-        print("Max z =", " + ".join([f"{abs(c[i]):.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c))]))
+        print("Max z =", " ".join([f"{c[i]:+.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(c[i]):d}" + SimboloVariable[i] for i in range(len(c))]))
     else:
-        print("Min z =", " + ".join([f"{abs(c[i]):.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c))]))
+        print("Min z =", " ".join([f"{c[i]:+.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(c[i]):d}" + SimboloVariable[i] for i in range(len(c))]))
     print("Sujeto a:")
     for i, (coefs, op, rhs) in enumerate(restricciones_usuario):
         restriccion_str = " + ".join([f"{coefs[j]:.3f}" +  SimboloVariable[j] if coefs[j] % 1 != 0 else f"{int(coefs[j])}" +  SimboloVariable[j] for j in range(len(coefs))])
@@ -257,9 +257,9 @@ def PL_FormaEstandar():
     # Mostrar el modelo en forma estándar
     print("\nModelo en forma estándar:")
     if objetivo == "max":
-        print("Max z - (", " + ".join([f"{abs(c[i]):.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c)) if c[i] != 0]).replace("+ -", "- "), ") = 0")
+        print("Max z - (", " ".join([f"{c[i]:+.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(c[i]):d}" + SimboloVariable[i] for i in range(len(c)) if c[i] != 0]).replace("+ -", "- "), ") = 0")
     else:
-        print("Min z - (", " + ".join([f"{abs(c[i]):.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(abs(c[i]))}" + SimboloVariable[i] for i in range(len(c)) if c[i] != 0]).replace("+ -", "- "), ") = 0")
+        print("Min z - (", " ".join([f"{c[i]:+.3f}" + SimboloVariable[i] if abs(c[i]) % 1 != 0 else f"{int(c[i]):d}" + SimboloVariable[i] for i in range(len(c)) if c[i] != 0]).replace("+ -", "- "), ") = 0")
 
     print("Sujeto a:")
     for i in range(A.rows):
@@ -283,7 +283,7 @@ def PL_FormaEstandar():
       else:
         print("Actividad finalizada")
     else:
-      Simplex(Matriz,FuncionObjetivo,Recursos,SimboloVariable)
+        Simplex(Matriz,FuncionObjetivo,Recursos,SimboloVariable)
 
 def Simplex(Matriz, FuncionObjetivo, Recursos, SimboloVariable):
     Matriz = np.vstack([FuncionObjetivo, Matriz]) #añadimos la funcion objetivo a la matriz de restricciones
@@ -294,13 +294,8 @@ def Simplex(Matriz, FuncionObjetivo, Recursos, SimboloVariable):
     ######################### Caculamos las variables que forman la matriz identidad
     result_columns_with_index = []
     for col in df.columns:
-        column_data = df[col].iloc[1:]  # Check for exactly one 1 in the column (ignoring the first row)
-        ones_count = (column_data == 1.000).sum()
-        if ones_count == 1:  # Ensure there's exactly one 1
-            idx = column_data[column_data == 1.000].index[0] # Get the index of the row with the 1
-            # Ensure the index of the 1 corresponds to the position in the DataFrame
-            if (column_data == 0.000).sum() == len(df) - 2:  # All other values are 0
-                result_columns_with_index.append((col, idx))
+        if (df[col].isin([0, 1]).all() == True and (df[col] == 1.000).sum() == 1): #check if the column only has zeros and ones, validate if the column sum is 1
+        result_columns_with_index.append((col, df[df[col] == 1.000].index[0])) # Ensure the index of the 1 corresponds to the position in the DataFrame 
 
     row_index = [col for col, _ in sorted(result_columns_with_index, key=lambda x: x[1])] #assign result_columns_with_index but order it by row
     row_index.insert(0, 'z') #agregamos w al row=index
@@ -386,13 +381,8 @@ def DosFasesSimplex(Matriz, FuncionObjetivo, Recursos, SimboloVariable):
     ######################### Calculamos cuales variables forman la matriz identidad
     result_columns_with_index = []
     for col in df.columns:
-        column_data = df[col].iloc[1:]  # Check for exactly one 1 in the column (ignoring the first row)
-        ones_count = (column_data == 1.000).sum()
-        if ones_count == 1:  # Ensure there's exactly one 1
-            idx = column_data[column_data == 1.000].index[0] # Get the index of the row with the 1
-            # Ensure the index of the 1 corresponds to the position in the DataFrame
-            if (column_data == 0.000).sum() == len(df) - 2:  # All other values are 0
-                result_columns_with_index.append((col, idx))
+        if (df[col].isin([0, 1]).all() == True and (df[col] == 1.000).sum() == 1): #check if the column only has zeros and ones, validate if the column sum is 1
+        result_columns_with_index.append((col, df[df[col] == 1.000].index[0])) # Ensure the index of the 1 corresponds to the position in the DataFrame 
 
     row_index = [col for col, _ in sorted(result_columns_with_index, key=lambda x: x[1])] #assign result_columns_with_index but order it by row
     row_index.insert(0, 'w') #agregamos w al row=index
