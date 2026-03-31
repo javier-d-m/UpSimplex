@@ -295,7 +295,7 @@ def Simplex(Matriz, FuncionObjetivo, Recursos, SimboloVariable):
     result_columns_with_index = []
     for col in df.columns:
         if (df[col].isin([0, 1]).all() == True and (df[col] == 1.000).sum() == 1): #check if the column only has zeros and ones, validate if the column sum is 1
-        result_columns_with_index.append((col, df[df[col] == 1.000].index[0])) # Ensure the index of the 1 corresponds to the position in the DataFrame 
+            result_columns_with_index.append((col, df[df[col] == 1.000].index[0])) # Ensure the index of the 1 corresponds to the position in the DataFrame 
 
     row_index = [col for col, _ in sorted(result_columns_with_index, key=lambda x: x[1])] #assign result_columns_with_index but order it by row
     row_index.insert(0, 'z') #agregamos w al row=index
@@ -382,7 +382,7 @@ def DosFasesSimplex(Matriz, FuncionObjetivo, Recursos, SimboloVariable):
     result_columns_with_index = []
     for col in df.columns:
         if (df[col].isin([0, 1]).all() == True and (df[col] == 1.000).sum() == 1): #check if the column only has zeros and ones, validate if the column sum is 1
-        result_columns_with_index.append((col, df[df[col] == 1.000].index[0])) # Ensure the index of the 1 corresponds to the position in the DataFrame 
+            result_columns_with_index.append((col, df[df[col] == 1.000].index[0])) # Ensure the index of the 1 corresponds to the position in the DataFrame 
 
     row_index = [col for col, _ in sorted(result_columns_with_index, key=lambda x: x[1])] #assign result_columns_with_index but order it by row
     row_index.insert(0, 'w') #agregamos w al row=index
