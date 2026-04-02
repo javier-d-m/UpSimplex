@@ -6,7 +6,7 @@
 # -----------------------------------------------------------------------------
 #
 # Started on  <Sat Jan 25,  14:39:00 2025 Javier Diaz Medina>
-# Last update <Mon Mar 31,  01:14:00 2026 Javier Diaz Medina>
+# Last update <Wed Apr 01,  23:40:00 2026 Javier Diaz Medina>
 # -----------------------------------------------------------------------------
 #
 # $Id:: $
@@ -43,7 +43,7 @@
 from setuptools import setup
 setup(
     name="UpSimplex",
-    version="2.0.8",
+    version="2.0.9",
     packages=["UpSimplex"],
     install_requires=[
         "gilp==2.1.0",  # Automatically installs gilp
