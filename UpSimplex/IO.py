@@ -235,7 +235,7 @@ def PL_FormaEstandar():
                 nueva_columna[i] = -1.0
                 A = A.row_join(nueva_columna)
                 restriccion = " + ".join([f"{A[i, j]:.3f}" + SimboloVariable[j] if A[i, j] % 1 != 0 else f"{int(A[i, j])}" + SimboloVariable[j] for j in range(A.cols)])
-                print(f"Se agregó la variable de exceso s{i + 1} a la restricción {i + 1}.")
+                print(f"Se agregó la variable de exceso s{ContadorAuxiliar} a la restricción {i + 1}.")
                 desigualdades[i] = '='
             elif tipo_variable == "artificial" or tipo_variable == "a":
                 ContadorArtificial += 1
@@ -244,7 +244,7 @@ def PL_FormaEstandar():
                 nueva_columna[i] = 1.0
                 A = A.row_join(nueva_columna)
                 restriccion = " + ".join([f"{A[i, j]:.3f}" + SimboloVariable[j] if A[i, j] % 1 != 0 else f"{int(A[i, j])}" + SimboloVariable[j] for j in range(A.cols)])
-                print(f"Se agregó la variable artificial a{i + 1} a la restricción {i + 1}.")
+                print(f"Se agregó la variable artificial a{ContadorArtificial} a la restricción {i + 1}.")
                 desigualdades[i] = '='
             elif tipo_variable == "siguiente" or tipo_variable == "s":
                 break
@@ -381,7 +381,7 @@ def DosFasesSimplex(Matriz, FuncionObjetivo, Recursos, SimboloVariable):
     ######################### Calculamos cuales variables forman la matriz identidad
     result_columns_with_index = []
     for col in df.columns:
-        if (df[col].isin([0, 1]).all() == True and (df[col] == 1.000).sum() == 1): #check if the column only has zeros and ones, validate if the column sum is 1
+        if (df[col].iloc[1:].isin([0, 1]).all() == True and (df[col] == 1.000).sum() == 1): #check if the column only has zeros and ones, validate if the column sum is 1
             result_columns_with_index.append((col, df[df[col] == 1.000].index[0])) # Ensure the index of the 1 corresponds to the position in the DataFrame 
 
     row_index = [col for col, _ in sorted(result_columns_with_index, key=lambda x: x[1])] #assign result_columns_with_index but order it by row
