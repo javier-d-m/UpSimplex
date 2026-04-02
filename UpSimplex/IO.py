@@ -474,4 +474,4 @@ def DosFasesSimplex(Matriz, FuncionObjetivo, Recursos, SimboloVariable):
     Recursos = df.iloc[1:]['b']
     SimboloVariable = df.columns[:-1].tolist()
 
-    Simplex(Matriz,FuncionObjetivo,Recursos,SimboloVariable)
+    Simplex(Matriz,FuncionObjetivo,Recursos,SimboloVariable, True)
